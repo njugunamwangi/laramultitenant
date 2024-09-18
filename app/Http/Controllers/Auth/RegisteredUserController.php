@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -43,12 +44,15 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->assignRole(Role::TENANT);
+
         $tenant = Tenant::create([
             'name' => $request->name . ' Team',
         ]);
         $tenant->domains()->create([
             'domain' => $request->subdomain . '.' . config('tenancy.central_domains')[0],
         ]);
+
         $user->tenants()->attach($tenant->id);
 
 

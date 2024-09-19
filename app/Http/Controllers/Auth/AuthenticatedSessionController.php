@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Stancl\Tenancy\Database\Models\Domain;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,7 +29,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $domain = $request->user()->tenants[0]->domains[0]->domain;
+
+        $subdomain = explode('.', $domain)[0];
+
+        return redirect('http://' . $subdomain . '.' . config('tenancy.central_domains')[0] . route('dashboard', absolute: false));
     }
 
     /**

@@ -32,7 +32,7 @@ class RegisterTenancy extends RegisterTenant
         $user = User::find(Auth::id());
 
         $tenant = Tenant::create([
-            'name' => $data['name'] . ' Team',
+            'name' => $data['name'],
         ]);
 
         $name = str_replace(' ', '', $data['name']);

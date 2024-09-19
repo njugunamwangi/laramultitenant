@@ -47,7 +47,7 @@ class RegisteredUserController extends Controller
         $user->assignRole(Role::TENANT);
 
         $tenant = Tenant::create([
-            'name' => $request->name . ' Team',
+            'name' => $request->name,
         ]);
         $tenant->domains()->create([
             'domain' => $request->subdomain . '.' . config('tenancy.central_domains')[0],

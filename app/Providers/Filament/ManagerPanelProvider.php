@@ -56,6 +56,7 @@ class ManagerPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->viteTheme('resources/css/filament/manager/theme.css');
     }
 }
